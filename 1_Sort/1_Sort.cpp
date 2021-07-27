@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include <limits.h>
 #include <chrono>
+#include "exercise.h"
 
 void outputNumList(int* preSortList, int num);
 int* getNumList();
@@ -47,45 +48,6 @@ void merge(int* numList, int startPos, int centerPos, int endPos) {
 		else {
 			numList[index] = rightList[rightIndex];
 			rightIndex = rightIndex + 1;
-		}
-	}
-
-	delete[] leftList;
-	delete[] rightList;
-}
-void merge2(int* numList, int startPos, int centerPos, int endPos) {
-	auto n1 = centerPos - startPos + 1;
-	auto n2 = endPos - centerPos;
-	int* leftList = new int[n1];
-	int* rightList = new int[n2];
-
-	for (int index = 0; index < n1; index++) {
-		leftList[index] = numList[startPos + index];        //[startPos, centerPos]
-	}
-
-	for (int index = 0; index < n2; index++) {
-		rightList[index] = numList[centerPos + index + 1];       //(centerPos, endPos]
-	}
-
-	int leftIndex = 0, rightIndex = 0;
-	for (int index = startPos; index <= endPos; index++) {
-		if (leftIndex < n1 && rightIndex < n2) {
-			if (leftList[leftIndex] < rightList[rightIndex]) {
-				numList[index] = leftList[leftIndex];
-				leftIndex = leftIndex + 1;
-			}
-			else {
-				numList[index] = rightList[rightIndex];
-				rightIndex = rightIndex + 1;
-			}
-		}
-		else if (rightIndex < n2) {
-			numList[index] = rightList[rightIndex];
-			rightIndex = rightIndex + 1;
-		}
-		else if (leftIndex < n1) {
-			numList[index] = leftList[leftIndex];
-			leftIndex = leftIndex + 1;
 		}
 	}
 
