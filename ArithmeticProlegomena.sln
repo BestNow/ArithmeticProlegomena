@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1_Sort", "1_Sort\1_Sort.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "4_DivideAndConquer", "4_DivideAndConquer\4_DivideAndConquer.vcxproj", "{980354EB-8FDA-4E9F-84B9-9420F73991AE}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "5_ProbabilisticAnalysisAndStochasticAlgorithms", "5_ProbabilisticAnalysisAndStochasticAlgorithms\5_ProbabilisticAnalysisAndStochasticAlgorithms.vcxproj", "{520A090B-C166-4E37-BC53-461E6AE964F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{980354EB-8FDA-4E9F-84B9-9420F73991AE}.Release|x64.Build.0 = Release|x64
 		{980354EB-8FDA-4E9F-84B9-9420F73991AE}.Release|x86.ActiveCfg = Release|Win32
 		{980354EB-8FDA-4E9F-84B9-9420F73991AE}.Release|x86.Build.0 = Release|Win32
+		{520A090B-C166-4E37-BC53-461E6AE964F0}.Debug|x64.ActiveCfg = Debug|x64
+		{520A090B-C166-4E37-BC53-461E6AE964F0}.Debug|x64.Build.0 = Debug|x64
+		{520A090B-C166-4E37-BC53-461E6AE964F0}.Debug|x86.ActiveCfg = Debug|Win32
+		{520A090B-C166-4E37-BC53-461E6AE964F0}.Debug|x86.Build.0 = Debug|Win32
+		{520A090B-C166-4E37-BC53-461E6AE964F0}.Release|x64.ActiveCfg = Release|x64
+		{520A090B-C166-4E37-BC53-461E6AE964F0}.Release|x64.Build.0 = Release|x64
+		{520A090B-C166-4E37-BC53-461E6AE964F0}.Release|x86.ActiveCfg = Release|Win32
+		{520A090B-C166-4E37-BC53-461E6AE964F0}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
