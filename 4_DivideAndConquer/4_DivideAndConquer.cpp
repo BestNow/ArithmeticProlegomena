@@ -95,6 +95,7 @@ Matrix* squareMatrixMultiplyRecursive(Matrix* A, Matrix* B) {
         Matrix* A21 = new Matrix(midLine);
         Matrix* A22 = new Matrix(n - midLine);
     }
+    return C;
 }
 
 int main()
