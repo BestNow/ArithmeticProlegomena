@@ -1,18 +1,16 @@
-#ifndef __REDBLACKTREE_H__
-#define __REDBLACKTREE_H__
+#ifndef __REDBLACKTREEHASSIZE_H__
+#define __REDBLACKTREEHASSIZE_H__
 #include "Node.h"
-#include<limits>
-
-
-class RedBlackTree
+class RedBlackTreeHasSize
 {
 public:
-	RedBlackTree() {
+	RedBlackTreeHasSize() {
 		_nilNode = new Node(UINT32_MAX, INT64_MAX, BLACK_COLOR);
 		_root = _nilNode;
 	}
-	~RedBlackTree() {
-
+	~RedBlackTreeHasSize() {
+		deleteNode(_root);
+		delete _nilNode;
 	}
 
 	void rbInsert(Node* node) {
@@ -110,6 +108,36 @@ public:
 		return currNode;
 	}
 
+	/*
+		查找具有给定秩的元素(秩：在中序遍历树时输出的位置)
+		返回一个指针，指向以node为根的子树中包含第i小关键字的结点。
+	*/
+	Node* osSelect(Node* node, uint32_t index) {
+		auto leftHasNodeSize = node->getLeftChild()->getSize() + 1;
+		if (index == leftHasNodeSize)
+			return node;
+		else if (index < leftHasNodeSize)
+			return osSelect(node->getLeftChild(), index);
+		else
+			return osSelect(node->getRightChild(), index - leftHasNodeSize);
+	}
+	Node* osSelect(uint32_t index) {
+		return osSelect(_root, index);
+	}
+
+	//确定一个元素的秩(秩：在中序遍历树时输出的位置)
+	uint32_t osRank(Node* node) {
+		auto leftHasNodeSize = node->getLeftChild()->getSize() + 1;
+		auto currNode = node;
+		while (currNode != _root) {
+			if (currNode == currNode->getParent()->getRightChild())
+				leftHasNodeSize += currNode->getParent()->getLeftChild()->getSize() + 1;
+			currNode = currNode->getParent();
+		}
+
+		return leftHasNodeSize;
+	}
+
 private:
 	/*
 		左旋：左旋只影响旋转结点和其右子树的结构，把右子树的结点往左子树挪了。
@@ -135,6 +163,8 @@ private:
 		}
 		rightChildNode->setLeftChild(currNode);
 		currNode->setParent(rightChildNode);
+		rightChildNode->setSize(currNode->getSize());
+		currNode->setSize(currNode->getLeftChild()->getSize() + currNode->getRightChild()->getSize() + 1);
 	}
 
 	/*
@@ -162,6 +192,8 @@ private:
 		}
 		leftChildNode->setRightChild(currNode);
 		currNode->setParent(leftChildNode);
+		leftChildNode->setSize(currNode->getSize());
+		currNode->setSize(currNode->getLeftChild()->getSize() + currNode->getRightChild()->getSize() + 1);
 	}
 
 	/*
@@ -286,7 +318,7 @@ private:
 
 		*/
 		while (currNode != _root && currNode->getColor() == BLACK_COLOR) {
-			if (currNode == currNode->getParent()->getLeftChild()) {	
+			if (currNode == currNode->getParent()->getLeftChild()) {
 				auto rightBroNode = currNode->getParent()->getRightChild();
 				if (rightBroNode->getColor() == RED_COLOR) {
 					/*
@@ -353,9 +385,19 @@ private:
 
 		currNode->setColor(BLACK_COLOR);
 	}
+
+	void deleteNode(Node* node) {
+		if (node != nullptr) {
+			deleteNode(node->getLeftChild());
+			deleteNode(node->getRightChild());
+			if (node != _nilNode)
+				delete node;
+		}
+	}
 private:
 	Node* _root;
 	Node* _nilNode;
+
 };
 
-#endif // !__REDBLACKTREE_H__
+#endif // !__REDBLACKTREEHASSIZE_H__
