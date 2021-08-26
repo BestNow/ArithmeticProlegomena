@@ -214,6 +214,65 @@ void printLCS(const std::vector<LCSDirection>& directionVec, std::vector<uint32_
 	}
 }
 
+//----------------------------------------------------------------------------------------------------------------
+
+//----------------------------------------------------------------------------------------------------------------
+/*
+	最优二叉搜索树
+*/
+std::vector<int32_t> optimalBST(std::vector<float>& existsProList, std::vector<float>& unexistsProList) {
+	std::vector<float> totalExpList, totalProList;
+	std::vector<int32_t> rootList;
+	uint32_t existsListSize = existsProList.size();
+	uint32_t unexistsListSize = unexistsProList.size();
+
+
+	for (uint32_t index = 0; index < unexistsListSize; index++) {
+		for (uint32_t length = 0; length < unexistsListSize; length++) {
+			totalExpList.push_back(0);
+			totalProList.push_back(0);
+		}
+	}
+
+	for (uint32_t index = 0; index < existsListSize; index++) {
+		for (uint32_t length = 0; length < existsListSize; length++) {
+			rootList.push_back(-1);
+		}
+	}
+
+	for (auto index = 0; index < unexistsListSize; index++) {
+		totalExpList[index * unexistsListSize + index] = unexistsProList[index];
+		totalProList[index * unexistsListSize + index] = unexistsProList[index];
+	}
+
+
+	for (auto length = 1; length <= existsListSize; length++) {
+		for (auto beginPos = 0; beginPos <= existsListSize - length; beginPos++) {
+
+			auto endPos = beginPos + length - 1;
+			totalExpList[beginPos * unexistsListSize + (endPos + 1)] = 1e31;
+
+			totalProList[beginPos * unexistsListSize + (endPos + 1)] =
+				totalProList[beginPos * unexistsListSize + endPos]
+				+ existsProList[endPos] + unexistsProList[endPos + 1];
+
+			for (auto index = beginPos; index <= endPos; index++) {
+
+				auto exp = totalExpList[beginPos * unexistsListSize + index]
+					+ totalExpList[(index + 1) * unexistsListSize + (endPos + 1)]
+					+ totalProList[beginPos * unexistsListSize + (endPos + 1)];
+
+				if (exp < totalExpList[beginPos * unexistsListSize + (endPos + 1)]) {
+					totalExpList[beginPos * unexistsListSize + (endPos + 1)] = exp;
+					rootList[beginPos * existsListSize + endPos] = index;
+				}
+			}
+		}
+	}
+
+	return rootList;
+}
+
 
 //----------------------------------------------------------------------------------------------------------------
 
@@ -283,5 +342,24 @@ int main()
 	lcsLength(aList, bList, directionVec, lcsValueList);
 	// 2 4 1 2
 	printLCS(directionVec, aList, aList.size(), bList.size());
+
+
+	std::vector<float> existList;
+	std::vector<float> unexistList;
+
+	existList.push_back(0.15);
+	existList.push_back(0.10);
+	existList.push_back(0.05);
+	existList.push_back(0.10);
+	existList.push_back(0.20);
+
+	unexistList.push_back(0.05);
+	unexistList.push_back(0.10);
+	unexistList.push_back(0.05);
+	unexistList.push_back(0.05);
+	unexistList.push_back(0.05);
+	unexistList.push_back(0.10);
+
+	optimalBST(existList, unexistList);
 }
 
