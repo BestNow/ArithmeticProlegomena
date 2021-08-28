@@ -273,7 +273,6 @@ std::vector<int32_t> optimalBST(std::vector<float>& existsProList, std::vector<f
 	return rootList;
 }
 
-
 //----------------------------------------------------------------------------------------------------------------
 
 int main()
